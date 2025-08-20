@@ -4,53 +4,100 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>J&G 營養俱樂部｜健康好喝、天天有感</title>
-  <meta name="description" content="J&G 營養俱樂部：高蛋白、低熱量、客製口味。香草、巧克力、野莓等人氣飲品，線上點餐、到店取餐。">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <meta name="description" content="J&G 營養俱樂部：高蛋白、低熱量、客製口味。香草、巧克力、野莓等人氣飲品，支援線上點餐與到店取餐。">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <style>
-    :root{--brand:#10b981;--brand-600:#059669;--brand-50:#ecfdf5;--ink:#111827;--muted:#6b7280;--bg:#ffffff;--card:#ffffff;--shadow:0 10px 25px rgba(0,0,0,.08);--radius:16px;--max:1200px}
-    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif}
-    a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+    :root{
+      --brand:#10b981; --brand-600:#059669; --brand-50:#ecfdf5;
+      --ink:#111827; --muted:#6b7280; --bg:#ffffff; --card:#ffffff;
+      --shadow:0 10px 25px rgba(0,0,0,.08); --radius:16px; --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,-apple-system,"Segoe UI","PingFang TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif}
+    a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+
     .container{width:min(100%, var(--max));margin-inline:auto;padding-inline:20px}
-    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.25rem;border-radius:999px;font-weight:700;border:2px solid transparent;box-shadow:var(--shadow);transition:.2s}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.25rem;border-radius:999px;font-weight:700;border:2px solid transparent;box-shadow:var(--shadow);transition:.2s;cursor:pointer}
     .btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{background:var(--brand-600);transform:translateY(-1px)}
-    .btn-ghost{background:#fff;border-color:var(--brand);color:var(--brand)}.btn-ghost:hover{background:var(--brand-50)}
+    .btn-ghost{background:#fff;border-color:var(--brand);color:var(--brand)} .btn-ghost:hover{background:var(--brand-50)}
     .pill{display:inline-block;background:var(--brand-50);color:var(--brand-600);padding:.35rem .75rem;border-radius:999px;font-weight:700;font-size:.85rem}
+
+    /* NAV */
     .nav{position:sticky;top:0;z-index:50;background:#ffffffcc;backdrop-filter:saturate(150%) blur(6px);border-bottom:1px solid #f1f5f9}
     .nav-wrap{display:flex;align-items:center;justify-content:space-between;padding:.75rem 20px;gap:1rem}
-    .brand{display:flex;align-items:center;gap:.75rem;font-weight:900;font-size:1.15rem;letter-spacing:.02em}
+    .brand{display:flex;align-items:center;gap:.75rem;font-weight:900;font-size:1.15rem}
     .brand .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--brand),#34d399);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:var(--shadow)}
-    .nav-actions{display:flex;gap:.6rem}
-    .hero{position:relative;background:radial-gradient(1200px 600px at 80% -10%, #d1fae5 0%, rgba(16,185,129,.05) 60%, transparent 70%),linear-gradient(180deg,#fff, #f8fafc);overflow:hidden}
+    .nav-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+
+    /* HERO */
+    .hero{background:
+      radial-gradient(1200px 600px at 80% -10%, #d1fae5 0%, rgba(16,185,129,.05) 60%, transparent 70%),
+      linear-gradient(180deg,#fff,#f8fafc)}
     .hero .container{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:64px}
-    .hero h1{font-size:clamp(2rem, 4vw + .5rem, 3rem);line-height:1.15;margin:0 0 10px;font-weight:900}
+    .hero h1{font-size:clamp(2rem,4vw + .5rem,3rem);line-height:1.15;margin:0 0 10px;font-weight:900}
     .hero p.lead{margin:0 0 24px;color:var(--muted);font-size:clamp(1rem, 1.3vw + .5rem,1.125rem)}
-    .hero-cta{display:flex;gap:.75rem;flex-wrap:wrap}.heroimg{border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}.col-4{grid-column:span 4}
-    .section{padding-block:56px}.section h2{font-size:clamp(1.35rem,2.2vw + .6rem,1.9rem);margin:0 0 18px}.muted{color:var(--muted)}
+    .heroimg{border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+    .heroimg img{aspect-ratio:4/3;object-fit:cover}
+
+    /* SECTIONS */
+    .section{padding-block:56px}
+    .section h2{font-size:clamp(1.35rem,2.2vw + .6rem,1.9rem);margin:0 0 18px}
+    .muted{color:var(--muted)}
+
+    /* GRID & CARDS */
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+    .col-4{grid-column:span 4}
     .card{border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-    .card-img{overflow:hidden}.card-img img{aspect-ratio:4/3;object-fit:cover;transition:transform .6s}.card:hover .card-img img{transform:scale(1.05)}
-    .card-body{padding:18px}.price{font-weight:900;color:var(--brand-600)}.card-footer{display:flex;gap:.5rem;padding:16px 18px 20px}
-    .tag{font-size:.75rem;background:#f1f5f9;color:#475569;padding:.35rem .6rem;border-radius:8px}
+    .card-img{overflow:hidden}
+    .card-img img{aspect-ratio:4/3;object-fit:cover;transition:transform .6s}
+    .card:hover .card-img img{transform:scale(1.05)}
+    .card-body{padding:18px}
+    .price{font-weight:900;color:var(--brand-600)}
+    .card-footer{display:flex;gap:.5rem;padding:16px 18px 20px}
+
+    /* BENEFITS */
+    .benefits{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+    .b-item{grid-column:span 4;border-radius:16px;background:#f8fafc;padding:18px;display:flex;gap:.75rem;align-items:flex-start}
+    .b-item strong{display:block;margin-bottom:4px}
+
+    /* STORE */
+    .store{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;align-items:center}
+    .store .map{grid-column:span 7;border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+    .store .info{grid-column:span 5}
+    .list{list-style:none;padding:0;margin:14px 0 0}
+    .list li{margin:8px 0;color:#334155}
+
+    /* FOOTER */
     .footer{padding:28px 0;border-top:1px solid #e5e7eb;color:#64748b;font-size:.9rem}
-    @media (max-width: 920px){.hero .container{grid-template-columns:1fr;gap:26px;padding-block:44px}.grid .col-4{grid-column:span 6}}
-    @media (max-width: 640px){.grid .col-4{grid-column:span 12}}
+
+    /* RWD */
+    @media (max-width: 920px){
+      .hero .container{grid-template-columns:1fr;gap:26px;padding-block:44px}
+      .grid .col-4{grid-column:span 6}
+      .benefits .b-item{grid-column:span 6}
+      .store .map{grid-column:span 12}
+      .store .info{grid-column:span 12}
+    }
+    @media (max-width: 640px){
+      .grid .col-4{grid-column:span 12}
+      .benefits .b-item{grid-column:span 12}
+    }
   </style>
 
   <script>
-    /* === 設定：請替換成你的實際值 === */
-    const ORDER_API = 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXX/exec'; // ← 你的 GAS /exec
-    const LIFF_ID   = '20079xxxxx-XXXXxxx';                                       // ← 你的 LIFF ID（供 order.html 用）
-
-    // 首頁只需要帶 product 參數到 order.html
-    function goOrder(pid=''){
-      const url = `order.html?product=${encodeURIComponent(pid)}`;
-      window.location.href = url;
-    }
+    /* ===== 這裡填你的實際連結（可先不改也能用） ===== */
+    const LINE_ADD  = 'https://line.me/R/ti/p/@710gtxdl';         // 官方帳號加入連結（可換）
+    // 導到訂單頁（order.html），並帶上商品 id
+    function goOrder(pid=''){ location.href = `order.html?product=${encodeURIComponent(pid)}`; }
+    // 導到 LINE 加好友
+    function goAddLine(){ window.open(LINE_ADD, '_blank'); }
   </script>
 </head>
 <body>
+
+  <!-- NAV -->
   <header class="nav">
     <div class="container nav-wrap">
       <a class="brand" href="#"><span class="logo">J&G</span>J&G 營養俱樂部</a>
@@ -61,31 +108,34 @@
     </div>
   </header>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="container">
       <div>
         <span class="pill">高蛋白．低熱量．好喝無負擔</span>
         <h1>打造活力每一天<br>客製你的營養飲品</h1>
         <p class="lead">香草、巧克力、野莓等人氣風味，甜度/冰量自由調整。外帶即飲，運動/上班超方便！</p>
-        <div class="hero-cta">
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
           <button class="btn btn-primary" onclick="goOrder()">立即點餐</button>
-          <a class="btn btn-ghost" href="#menu">看看菜單</a>
+          <button class="btn btn-ghost" onclick="goAddLine()">加入 LINE</button>
         </div>
       </div>
       <div class="heroimg">
-        <img src="https://images.unsplash.com/photo-1553531888-a99fa3c6b1d5?q=80&w=1400&auto=format&fit=crop" alt="">
+        <img src="https://images.unsplash.com/photo-1553531888-a99fa3c6b1d5?q=80&w=1400&auto=format&fit=crop" alt="高蛋白營養飲品">
       </div>
     </div>
   </section>
 
+  <!-- PRODUCTS -->
   <section class="section" id="menu">
     <div class="container">
       <h2>人氣飲品</h2>
-      <p class="muted">以下價格為示意，實價可於門市或 LIFF 訂購頁確認。</p>
+      <p class="muted">口味、甜度、冰量皆可客製。首次體驗歡迎詢問店內店員～</p>
 
       <div class="grid" style="margin-top:18px">
+        <!-- Card 1 -->
         <article class="card col-4">
-          <div class="card-img"><img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1200&auto=format&fit=crop" alt="香草奶昔"></div>
           <div class="card-body">
             <div class="pill" style="background:#fef3c7;color:#b45309">香草 Vanilla</div>
             <h3 style="margin:10px 0 6px">蛋白飲料粉</h3>
@@ -94,12 +144,13 @@
           </div>
           <div class="card-footer">
             <button class="btn btn-primary" onclick="goOrder('pdm-vanilla')">我要點餐</button>
-            <a class="btn btn-ghost" href="#menu">更多資訊</a>
+            <a class="btn btn-ghost" href="#benefits">成分與優勢</a>
           </div>
         </article>
 
+        <!-- Card 2 -->
         <article class="card col-4">
-          <div class="card-img"><img src="https://images.unsplash.com/photo-1542444459-db63c9f5b3d3?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1542444459-db63c9f5b3d3?q=80&w=1200&auto=format&fit=crop" alt="巧克力奶昔"></div>
           <div class="card-body">
             <div class="pill" style="background:#fee2e2;color:#b91c1c">巧克力 Chocolate</div>
             <h3 style="margin:10px 0 6px">蛋白飲料粉</h3>
@@ -108,12 +159,13 @@
           </div>
           <div class="card-footer">
             <button class="btn btn-primary" onclick="goOrder('pdm-choco')">我要點餐</button>
-            <a class="btn btn-ghost" href="#menu">更多資訊</a>
+            <a class="btn btn-ghost" href="#benefits">成分與優勢</a>
           </div>
         </article>
 
+        <!-- Card 3 -->
         <article class="card col-4">
-          <div class="card-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop" alt="野莓"></div>
           <div class="card-body">
             <div class="pill" style="background:#ede9fe;color:#6d28d9">野莓 Wild Berry</div>
             <h3 style="margin:10px 0 6px">蛋白飲料粉</h3>
@@ -122,19 +174,73 @@
           </div>
           <div class="card-footer">
             <button class="btn btn-primary" onclick="goOrder('pdm-berry')">我要點餐</button>
-            <a class="btn btn-ghost" href="#menu">更多資訊</a>
+            <a class="btn btn-ghost" href="#benefits">成分與優勢</a>
           </div>
         </article>
       </div>
     </div>
   </section>
 
+  <!-- BENEFITS -->
+  <section class="section" id="benefits" style="background:#fcfffe">
+    <div class="container">
+      <h2>為什麼選擇我們？</h2>
+    <div class="benefits" style="margin-top:10px">
+      <div class="b-item">
+        <div class="pill" style="background:var(--brand-50);color:var(--brand-600)">01</div>
+        <div>
+          <strong>優質蛋白，補足關鍵營養</strong>
+          <span class="muted">每杯提供高品質蛋白質，搭配均衡飲食與運動，幫你更有效率地管理體態。</span>
+        </div>
+      </div>
+      <div class="b-item">
+        <div class="pill" style="background:var(--brand-50);color:var(--brand-600)">02</div>
+        <div>
+          <strong>低熱量、客製甜度與冰量</strong>
+          <span class="muted">依照你的喜好調整風味與口感，讓健康飲食更容易持之以恆。</span>
+        </div>
+      </div>
+      <div class="b-item">
+        <div class="pill" style="background:var(--brand-50);color:var(--brand-600)">03</div>
+        <div>
+          <strong>外帶即飲，日常補給超方便</strong>
+          <span class="muted">快速出杯、保存便利，訓練前後或忙碌上班族的最佳夥伴。</span>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- STORE -->
+  <section class="section" id="store">
+    <div class="container store">
+      <div class="map">
+        <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=1400&auto=format&fit=crop" alt="店內環境">
+      </div>
+      <div class="info">
+        <span class="pill">門市資訊</span>
+        <h2 style="margin-top:8px">J&G 營養俱樂部（平鎮）</h2>
+        <ul class="list">
+          <li>地址：桃園市平鎮區復旦路二段241巷1弄22衖1號1樓</li>
+          <li>營業時間：週一～週六 10:00–20:00；週日公休</li>
+          <li>電話：<a href="tel:0907-207-088" style="color:var(--brand-600);font-weight:700">0907-207-088</a></li>
+        </ul>
+        <div style="margin-top:14px;display:flex;gap:.6rem;flex-wrap:wrap">
+          <a class="btn btn-ghost" href="https://maps.google.com/?q=桃園市平鎮區復旦路二段241巷1弄22衖1號1樓" target="_blank" rel="noopener">在 Google 地圖開啟</a>
+          <button class="btn btn-primary" onclick="goOrder()">我要點餐</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
       <div>© <span id="y"></span> J&G 營養俱樂部</div>
       <div class="muted">高蛋白・低熱量・客製風味 | 你的每日營養補給站</div>
     </div>
   </footer>
+
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>
 </html>
