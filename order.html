@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>線上點餐｜J&G 營養俱樂部</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    :root{--brand:#10b981;--brand-600:#059669;--ink:#111827;--muted:#6b7280;--shadow:0 10px 25px rgba(0,0,0,.08);--radius:16px;--max:960px}
+    *{box-sizing:border-box}html,body{margin:0;background:#fff;font-family:"Noto Sans TC",system-ui}
+    .container{width:min(100%,var(--max));margin:auto;padding:20px}
+    h1{margin:10px 0 8px;font-size:1.5rem}
+    .muted{color:var(--muted)}
+    .card{border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .img{aspect-ratio:4/3;object-fit:cover;width:100%}
+    .sec{padding:16px}
+    label{font-size:.9rem;color:#374151;font-weight:700;display:block;margin:10px 0 6px}
+    input[type="number"],select,textarea,input[type="text"]{width:100%;padding:.75rem;border:1px solid #e5e7eb;border-radius:12px;font-size:1rem}
+    textarea{min-height:80px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .price{font-weight:900;color:#065f46}
+    .btn{margin-top:12px;display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.25rem;border-radius:999px;font-weight:700;border:0;background:var(--brand);color:#fff;box-shadow:var(--shadow);cursor:pointer}
+    .btn[disabled]{opacity:.6;cursor:not-allowed}
+    .bar{display:flex;justify-content:space-between;align-items:center;margin:6px 0 14px}
+    .ok{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:.65rem .8rem;border-radius:12px;margin-top:10px;display:none}
+    .err{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:.65rem .8rem;border-radius:12px;margin-top:10px;display:none}
+    @media (max-width: 760px){.grid{grid-template-columns:1fr}}
+  </style>
+  <script>
+    /* === 設定：請替換成你的實際值（同 index.html）=== */
+    const ORDER_API = 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXX/exec'; // ← GAS /exec
+    const LIFF_ID   = '20079xxxxx-XXXXxxx';                                       // ← 你的 LIFF ID
+
+    // 商品資料（id 必須跟 GAS & 試算表一致）
+    const PRODUCTS = {
+      'pdm-vanilla': { id:'pdm-vanilla', name:'蛋白飲料粉', flavor:'香草 Vanilla', price:120,
+        img:'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1200&auto=format&fit=crop'},
+      'pdm-choco'  : { id:'pdm-choco'  , name:'蛋白飲料粉', flavor:'巧克力 Chocolate', price:120,
+        img:'https://images.unsplash.com/photo-1542444459-db63c9f5b3d3?q=80&w=1200&auto=format&fit=crop'},
+      'pdm-berry'  : { id:'pdm-berry'  , name:'蛋白飲料粉', flavor:'野莓 Wild Berry', price:120,
+        img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop'}
+    };
+
+    // 工具
+    const $ = s => document.querySelector(s);
+    const qp = new URLSearchParams(location.search);
+    const pid = qp.get('product') || 'pdm-vanilla';
+
+    // 狀態
+    let profile = { userId:'', displayName:'' };
+
+    async function init(){
+      // 填入商品
+      const p = PRODUCTS[pid] || PRODUCTS['pdm-vanilla'];
+      $('#p-img').src = p.img;
+      $('#p-title').textContent = p.name;
+      $('#p-flavor').textContent = p.flavor;
+      $('#unit').textContent = p.price;
+      $('#total').textContent = p.price;
+
+      // 嘗試啟動 LIFF 取得使用者
+      try{
+        if(LIFF_ID && window.liff){
+          await liff.init({ liffId: LIFF_ID });
+          if(liff.isLoggedIn()){
+            const prof = await liff.getProfile();
+            profile.userId = prof.userId || '';
+            profile.displayName = prof.displayName || '';
+            $('#displayName').value = profile.displayName || '';
+            $('#linehint').textContent = '已從 LINE 擷取暱稱；若需更正可自行修改。';
+          }else{
+            // 一般瀏覽器或尚未登入
+            $('#linehint').textContent = '未從 LINE 取得暱稱，可直接填寫。';
+          }
+        }
+      }catch(e){
+        console.log('LIFF init 失敗：', e);
+        $('#linehint').textContent = '未從 LINE 取得暱稱，可直接填寫。';
+      }
+
+      // 計價
+      $('#qty').addEventListener('input', updateTotal);
+      $('#sugar').addEventListener('change', updateTotal);
+      $('#ice').addEventListener('change', updateTotal);
+    }
+
+    function updateTotal(){
+      const p = PRODUCTS[pid] || PRODUCTS['pdm-vanilla'];
+      const qty = Math.max(1, Number($('#qty').value||1));
+      $('#qty').value = qty;
+      $('#total').textContent = p.price * qty;
+    }
+
+    async function submitOrder(){
+      $('.ok').style.display='none';
+      $('.err').style.display='none';
+
+      if(!ORDER_API || !/^https?:\/\//.test(ORDER_API)){
+        $('.err').textContent='尚未設定 ORDER_API，請先在檔頭替換。';
+        $('.err').style.display='block';
+        return;
+      }
+
+      const p = PRODUCTS[pid] || PRODUCTS['pdm-vanilla'];
+      const payload = {
+        api:'order',
+        userId: profile.userId || '',
+        displayName: ($('#displayName').value || profile.displayName || '訪客'),
+        productId: p.id,
+        productName: p.name,
+        flavor: p.flavor,
+        qty: Number($('#qty').value||1),
+        sugar: $('#sugar').value,
+        ice: $('#ice').value,
+        note: $('#note').value||''
+      };
+
+      const btn = $('#submit');
+      btn.disabled = true; btn.textContent = '送出中…';
+
+      try{
+        const res = await fetch(ORDER_API, {
+          method:'POST',
+          headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // 避免預檢
+          body: JSON.stringify(payload)
+        });
+        // Apps Script 一般會回 200 + JSON
+        const data = await res.json().catch(()=>({ok:true}));
+        if(data && data.ok){
+          $('.ok').textContent = '訂單已送出，感謝！可返回首頁或再點一杯。';
+          $('.ok').style.display='block';
+          $('#again').style.display='inline-flex';
+        }else{
+          throw new Error(data && data.message || '送單失敗，請稍後再試。');
+        }
+      }catch(err){
+        $('.err').textContent = '送單失敗：' + err.message;
+        $('.err').style.display='block';
+      }finally{
+        btn.disabled = false; btn.textContent = '送出訂單';
+      }
+    }
+
+    function goHome(){ location.href = './'; }
+    function again(){ location.href = 'order.html?product='+encodeURIComponent(pid); }
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="bar">
+      <h1>線上點餐</h1>
+      <button class="btn" onclick="goHome()">回首頁</button>
+    </div>
+    <p class="muted" id="linehint"></p>
+
+    <div class="card">
+      <div class="grid">
+        <div><img id="p-img" class="img" alt=""></div>
+        <div class="sec">
+          <div class="muted">商品</div>
+          <h2 id="p-title" style="margin:6px 0 4px">—</h2>
+          <div class="muted" id="p-flavor">—</div>
+
+          <div class="row">
+            <div>
+              <label>數量</label>
+              <input id="qty" type="number" min="1" value="1">
+            </div>
+            <div>
+              <label>單杯價格</label>
+              <div class="price">NT$ <span id="unit">—</span></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label>甜度</label>
+              <select id="sugar">
+                <option>無糖</option>
+                <option selected>微糖</option>
+                <option>半糖</option>
+                <option>全糖</option>
+              </select>
+            </div>
+            <div>
+              <label>冰量</label>
+              <select id="ice">
+                <option>去冰</option>
+                <option selected>微冰</option>
+                <option>正常冰</option>
+              </select>
+            </div>
+          </div>
+
+          <label>備註</label>
+          <textarea id="note" placeholder="例如：不要奶、加燕麥…"></textarea>
+
+          <label>暱稱（若在 LINE 內開啟會自動帶入）</label>
+          <input id="displayName" type="text" placeholder="您的稱呼">
+
+          <div class="row" style="align-items:end">
+            <div>
+              <label>合計</label>
+              <div class="price" style="font-size:1.25rem">NT$ <span id="total">—</span></div>
+            </div>
+            <div style="text-align:right">
+              <button id="submit" class="btn" onclick="submitOrder()">送出訂單</button>
+              <button id="again" class="btn" style="display:none" onclick="again()">再點一杯</button>
+            </div>
+          </div>
+
+          <div class="ok"></div>
+          <div class="err"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
