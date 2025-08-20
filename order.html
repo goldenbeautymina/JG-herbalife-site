@@ -2,38 +2,69 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>線上點餐｜J&G 營養俱樂部</title>
+  <meta name="description" content="J&G 營養俱樂部線上點餐：自選口味、甜度、冰量，快速送單到門市。">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
-    :root{--brand:#10b981;--brand-600:#059669;--ink:#111827;--muted:#6b7280;--shadow:0 10px 25px rgba(0,0,0,.08);--radius:16px;--max:960px}
-    *{box-sizing:border-box}html,body{margin:0;background:#fff;font-family:"Noto Sans TC",system-ui}
-    .container{width:min(100%,var(--max));margin:auto;padding:20px}
-    h1{margin:10px 0 8px;font-size:1.5rem}
-    .muted{color:var(--muted)}
-    .card{border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .img{aspect-ratio:4/3;object-fit:cover;width:100%}
-    .sec{padding:16px}
-    label{font-size:.9rem;color:#374151;font-weight:700;display:block;margin:10px 0 6px}
-    input[type="number"],select,textarea,input[type="text"]{width:100%;padding:.75rem;border:1px solid #e5e7eb;border-radius:12px;font-size:1rem}
-    textarea{min-height:80px}
+    :root{
+      --brand:#10b981; --brand-600:#059669; --brand-50:#ecfdf5;
+      --ink:#0f172a; --muted:#64748b; --bg:#f8fafc; --card:#fff;
+      --shadow:0 14px 35px rgba(2,6,23,.08); --radius:18px; --max:1080px;
+      --warn:#ef4444; --ok:#16a34a;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,-apple-system,"Segoe UI","PingFang TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(100%,var(--max));margin:auto;padding:22px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .brand{display:flex;gap:.65rem;align-items:center;font-weight:900}
+    .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--brand),#34d399);display:grid;place-items:center;color:#fff;box-shadow:var(--shadow)}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.15rem;border-radius:999px;border:0;background:var(--brand);color:#fff;font-weight:800;box-shadow:var(--shadow);cursor:pointer;transition:.2s}
+    .btn:hover{background:var(--brand-600);transform:translateY(-1px)}
+    .btn-ghost{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+    .btn-ghost:hover{background:var(--brand-50)}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .card .head{padding:16px 18px;border-bottom:1px solid #e2e8f0;font-weight:900}
+    .card .body{padding:18px}
+    .field{margin:12px 0}
+    .label{font-size:.9rem;color:#334155;font-weight:800;margin:0 0 6px}
     .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    input[type="number"],select,input[type="text"],textarea{
+      width:100%;padding:.9rem;border:1px solid #e5e7eb;border-radius:14px;font-size:1rem;background:#fff
+    }
+    textarea{min-height:84px;resize:vertical}
+    .muted{color:var(--muted)}
+    .product{display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:center}
+    .thumb{border-radius:14px;overflow:hidden}
     .price{font-weight:900;color:#065f46}
-    .btn{margin-top:12px;display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.25rem;border-radius:999px;font-weight:700;border:0;background:var(--brand);color:#fff;box-shadow:var(--shadow);cursor:pointer}
-    .btn[disabled]{opacity:.6;cursor:not-allowed}
-    .bar{display:flex;justify-content:space-between;align-items:center;margin:6px 0 14px}
-    .ok{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:.65rem .8rem;border-radius:12px;margin-top:10px;display:none}
-    .err{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:.65rem .8rem;border-radius:12px;margin-top:10px;display:none}
-    @media (max-width: 760px){.grid{grid-template-columns:1fr}}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+    .kpi{background:#f1f5f9;border-radius:12px;padding:.45rem .6rem;text-align:center;font-size:.9rem}
+    .total{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-top:1px solid #e2e8f0}
+    .total .n{font-weight:900;font-size:1.25rem;color:#065f46}
+    .help{margin:6px 0 0;font-size:.92rem}
+    .hint{background:#ecfeff;border:1px solid #bae6fd;color:#0369a1;border-radius:12px;padding:.6rem .8rem;margin-top:8px}
+    .ok{background:#ecfdf5;border:1px solid #86efac;color:#065f46;border-radius:12px;padding:.7rem .9rem;margin-top:10px;display:none}
+    .err{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:12px;padding:.7rem .9rem;margin-top:10px;display:none}
+    .success-wrap{display:none}
+    .success{padding:26px;text-align:center}
+    .success h2{margin:.2rem 0 .25rem}
+    .success p{color:var(--muted)}
+    .actions{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:12px}
+    .hr{height:1px;background:#e2e8f0;margin:14px 0}
+    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
   </style>
   <script>
-    /* === 設定：請替換成你的實際值（同 index.html）=== */
-    const ORDER_API = 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXX/exec'; // ← GAS /exec
-    const LIFF_ID   = '20079xxxxx-XXXXxxx';                                       // ← 你的 LIFF ID
+    /* ====== 請替換成你的實際值 ====== */
+    const ORDER_API = 'https://script.google.com/macros/s/AKfycbyUM0WoyW1CGtatVPEesG7KdOjeQ3Ozz1V587QLPK09iGtvm5AkVJtmXyltqMVSgwxl/exec'; // ← GAS /exec
+    const LIFF_ID   = '2007954350-XMv4Vpwr';                                       // ← LIFF ID（非 URL）
+    const HOME_URL  = './';                                                       // 回首頁用
 
-    // 商品資料（id 必須跟 GAS & 試算表一致）
+    // 產品資料（id 必須與 GAS / 試算表一致）
     const PRODUCTS = {
       'pdm-vanilla': { id:'pdm-vanilla', name:'蛋白飲料粉', flavor:'香草 Vanilla', price:120,
         img:'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1200&auto=format&fit=crop'},
@@ -44,23 +75,20 @@
     };
 
     // 工具
-    const $ = s => document.querySelector(s);
-    const qp = new URLSearchParams(location.search);
-    const pid = qp.get('product') || 'pdm-vanilla';
+    const $  = s => document.querySelector(s);
+    const qs = s => new URLSearchParams(location.search).get(s)||'';
+    const pid = qs('product') || 'pdm-vanilla';
 
-    // 狀態
     let profile = { userId:'', displayName:'' };
 
     async function init(){
-      // 填入商品
+      // 產品呈現
       const p = PRODUCTS[pid] || PRODUCTS['pdm-vanilla'];
-      $('#p-img').src = p.img;
-      $('#p-title').textContent = p.name;
-      $('#p-flavor').textContent = p.flavor;
-      $('#unit').textContent = p.price;
-      $('#total').textContent = p.price;
+      $('#p-img').src = p.img; $('#p-title').textContent = p.name;
+      $('#p-flavor').textContent = p.flavor; $('#unit').textContent = p.price;
+      updateTotal();
 
-      // 嘗試啟動 LIFF 取得使用者
+      // 嘗試啟用 LIFF
       try{
         if(LIFF_ID && window.liff){
           await liff.init({ liffId: LIFF_ID });
@@ -69,45 +97,56 @@
             profile.userId = prof.userId || '';
             profile.displayName = prof.displayName || '';
             $('#displayName').value = profile.displayName || '';
-            $('#linehint').textContent = '已從 LINE 擷取暱稱；若需更正可自行修改。';
+            $('#linehint').textContent = '已從 LINE 取得暱稱；若需更正可修改後再送出。';
           }else{
-            // 一般瀏覽器或尚未登入
-            $('#linehint').textContent = '未從 LINE 取得暱稱，可直接填寫。';
+            $('#linehint').textContent = '目前非從 LINE 開啟，請輸入您的稱呼後送單。';
           }
+        }else{
+          $('#linehint').textContent = '如在 LINE 開啟可自動帶入暱稱；目前可直接填寫。';
         }
       }catch(e){
         console.log('LIFF init 失敗：', e);
-        $('#linehint').textContent = '未從 LINE 取得暱稱，可直接填寫。';
+        $('#linehint').textContent = '暫無法從 LINE 取得暱稱，可直接填寫。';
       }
 
-      // 計價
+      // 綁定事件
       $('#qty').addEventListener('input', updateTotal);
+      $('#sugar,#ice').forEach ? null : null; // 兼容性保留
       $('#sugar').addEventListener('change', updateTotal);
       $('#ice').addEventListener('change', updateTotal);
+      $('#submit').addEventListener('click', submitOrder);
+      $('#back').addEventListener('click', ()=> location.href = HOME_URL);
+      $('#again').addEventListener('click', ()=> location.href = 'order.html?product='+encodeURIComponent(pid));
     }
 
     function updateTotal(){
       const p = PRODUCTS[pid] || PRODUCTS['pdm-vanilla'];
       const qty = Math.max(1, Number($('#qty').value||1));
       $('#qty').value = qty;
-      $('#total').textContent = p.price * qty;
+      const total = p.price * qty;
+      $('#total').textContent = total;
+      $('#sum-title').textContent = `${p.name}｜${p.flavor}`;
+      $('#sum-qty').textContent   = `數量 × ${qty}`;
+      $('#sum-unit').textContent  = `單價 NT$ ${p.price}`;
+    }
+
+    function showToast(el, msg){
+      el.textContent = msg; el.style.display = 'block';
+      setTimeout(()=>{ el.style.display='none'; }, 4200);
     }
 
     async function submitOrder(){
-      $('.ok').style.display='none';
-      $('.err').style.display='none';
+      $('.ok').style.display='none'; $('.err').style.display='none';
 
       if(!ORDER_API || !/^https?:\/\//.test(ORDER_API)){
-        $('.err').textContent='尚未設定 ORDER_API，請先在檔頭替換。';
-        $('.err').style.display='block';
-        return;
+        return showToast($('.err'),'尚未設定 ORDER_API，請先在檔頭替換你的 GAS /exec。');
       }
 
       const p = PRODUCTS[pid] || PRODUCTS['pdm-vanilla'];
       const payload = {
-        api:'order',
+        api: 'order',
         userId: profile.userId || '',
-        displayName: ($('#displayName').value || profile.displayName || '訪客'),
+        displayName: ($('#displayName').value || profile.displayName || '').trim() || '訪客',
         productId: p.id,
         productName: p.name,
         flavor: p.flavor,
@@ -117,105 +156,147 @@
         note: $('#note').value||''
       };
 
-      const btn = $('#submit');
-      btn.disabled = true; btn.textContent = '送出中…';
+      // 簡單驗證
+      if(!payload.displayName){ return showToast($('.err'),'請輸入暱稱或您的稱呼'); }
+      if(!(payload.qty>0)){ return showToast($('.err'),'請確認數量'); }
+
+      const btn = $('#submit'); btn.disabled=true; btn.textContent='送出中…';
 
       try{
         const res = await fetch(ORDER_API, {
           method:'POST',
-          headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // 避免預檢
+          headers: { 'Content-Type':'text/plain;charset=utf-8' }, // 避免預檢
           body: JSON.stringify(payload)
         });
-        // Apps Script 一般會回 200 + JSON
         const data = await res.json().catch(()=>({ok:true}));
         if(data && data.ok){
-          $('.ok').textContent = '訂單已送出，感謝！可返回首頁或再點一杯。';
-          $('.ok').style.display='block';
-          $('#again').style.display='inline-flex';
+          // 切換成功畫面
+          $('.form-wrap').style.display='none';
+          $('.success-wrap').style.display='block';
+          $('#order-msg').textContent = data.message || '訂單已送出，感謝！';
         }else{
           throw new Error(data && data.message || '送單失敗，請稍後再試。');
         }
       }catch(err){
-        $('.err').textContent = '送單失敗：' + err.message;
-        $('.err').style.display='block';
+        showToast($('.err'),'送單失敗：' + err.message);
       }finally{
-        btn.disabled = false; btn.textContent = '送出訂單';
+        btn.disabled=false; btn.textContent='送出訂單';
       }
     }
 
-    function goHome(){ location.href = './'; }
-    function again(){ location.href = 'order.html?product='+encodeURIComponent(pid); }
     document.addEventListener('DOMContentLoaded', init);
   </script>
 </head>
 <body>
   <div class="container">
-    <div class="bar">
-      <h1>線上點餐</h1>
-      <button class="btn" onclick="goHome()">回首頁</button>
+    <div class="topbar">
+      <div class="brand"><div class="logo">J&G</div>J&G 營養俱樂部</div>
+      <button id="back" class="btn btn-ghost">回首頁</button>
     </div>
-    <p class="muted" id="linehint"></p>
 
-    <div class="card">
-      <div class="grid">
-        <div><img id="p-img" class="img" alt=""></div>
-        <div class="sec">
-          <div class="muted">商品</div>
-          <h2 id="p-title" style="margin:6px 0 4px">—</h2>
-          <div class="muted" id="p-flavor">—</div>
-
-          <div class="row">
+    <div class="grid">
+      <!-- 左：表單 -->
+      <div class="card form-wrap">
+        <div class="head">線上點餐</div>
+        <div class="body">
+          <!-- 商品資訊 -->
+          <div class="product">
+            <div class="thumb"><img id="p-img" alt="商品圖片"></div>
             <div>
-              <label>數量</label>
-              <input id="qty" type="number" min="1" value="1">
+              <div class="muted">商品</div>
+              <h2 id="p-title" style="margin:.25rem 0 .15rem">—</h2>
+              <div id="p-flavor" class="muted">—</div>
+              <div class="kpis">
+                <div class="kpi">蛋白質補給</div>
+                <div class="kpi">熱量友善</div>
+                <div class="kpi">客製甜冰</div>
+              </div>
             </div>
-            <div>
-              <label>單杯價格</label>
+          </div>
+
+          <div class="hr"></div>
+
+          <!-- 數量／單價 -->
+          <div class="row">
+            <div class="field">
+              <div class="label">數量</div>
+              <input id="qty" type="number" min="1" value="1" />
+            </div>
+            <div class="field">
+              <div class="label">單杯價格</div>
               <div class="price">NT$ <span id="unit">—</span></div>
             </div>
           </div>
 
+          <!-- 客製選項 -->
           <div class="row">
-            <div>
-              <label>甜度</label>
+            <div class="field">
+              <div class="label">甜度</div>
               <select id="sugar">
-                <option>無糖</option>
-                <option selected>微糖</option>
-                <option>半糖</option>
-                <option>全糖</option>
+                <option>無糖</option><option selected>微糖</option><option>半糖</option><option>全糖</option>
               </select>
             </div>
-            <div>
-              <label>冰量</label>
+            <div class="field">
+              <div class="label">冰量</div>
               <select id="ice">
-                <option>去冰</option>
-                <option selected>微冰</option>
-                <option>正常冰</option>
+                <option>去冰</option><option selected>微冰</option><option>正常冰</option>
               </select>
             </div>
           </div>
 
-          <label>備註</label>
-          <textarea id="note" placeholder="例如：不要奶、加燕麥…"></textarea>
+          <div class="field">
+            <div class="label">備註</div>
+            <textarea id="note" placeholder="例如：不要奶、加燕麥、少冰…"></textarea>
+          </div>
 
-          <label>暱稱（若在 LINE 內開啟會自動帶入）</label>
-          <input id="displayName" type="text" placeholder="您的稱呼">
-
-          <div class="row" style="align-items:end">
-            <div>
-              <label>合計</label>
-              <div class="price" style="font-size:1.25rem">NT$ <span id="total">—</span></div>
-            </div>
-            <div style="text-align:right">
-              <button id="submit" class="btn" onclick="submitOrder()">送出訂單</button>
-              <button id="again" class="btn" style="display:none" onclick="again()">再點一杯</button>
-            </div>
+          <!-- 使用者 -->
+          <div class="field">
+            <div class="label">暱稱</div>
+            <input id="displayName" type="text" placeholder="在 LINE 內開啟會自動帶入" />
+            <div id="linehint" class="help muted"></div>
           </div>
 
           <div class="ok"></div>
           <div class="err"></div>
         </div>
+        <div class="total">
+          <div>
+            <div class="muted">合計</div>
+            <div class="n">NT$ <span id="total">—</span></div>
+          </div>
+          <button id="submit" class="btn">送出訂單</button>
+        </div>
       </div>
+
+      <!-- 右：訂單摘要 -->
+      <aside class="card">
+        <div class="head">訂單摘要</div>
+        <div class="body">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div style="width:68px;height:68px;border-radius:12px;overflow:hidden"><img id="sum-img" src="" alt="" style="width:100%;height:100%;object-fit:cover" onload="document.getElementById('sum-img').src=document.getElementById('p-img').src"></div>
+            <div>
+              <div id="sum-title" style="font-weight:900;margin-bottom:4px">—</div>
+              <div id="sum-qty" class="muted">—</div>
+              <div id="sum-unit" class="muted">—</div>
+            </div>
+          </div>
+          <div class="hint">下單後我們會盡快準備，請於門市取餐時付款。若需大量訂購，建議先電洽門市。</div>
+        </div>
+      </aside>
+
+      <!-- 成功畫面 -->
+      <div class="card success-wrap">
+        <div class="success">
+          <div style="font-size:48px;line-height:1">🎉</div>
+          <h2>訂單送出成功</h2>
+          <p id="order-msg" class="muted">感謝您的訂購！</p>
+          <div class="actions">
+            <button id="again" class="btn">再點一杯</button>
+            <button id="back2" class="btn btn-ghost" onclick="location.href=HOME_URL">回首頁</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </body>
