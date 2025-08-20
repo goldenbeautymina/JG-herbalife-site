@@ -1,246 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>J&G 營養俱樂部｜健康好喝、天天有感</title>
-  <meta name="description" content="J&G 營養俱樂部：高蛋白、低熱量、客製口味。香草、巧克力、野莓等人氣飲品，支援線上點餐與到店取餐。">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Herbalife 健康生活館</title>
   <style>
-    :root{
-      --brand:#10b981; --brand-600:#059669; --brand-50:#ecfdf5;
-      --ink:#111827; --muted:#6b7280; --bg:#ffffff; --card:#ffffff;
-      --shadow:0 10px 25px rgba(0,0,0,.08); --radius:16px; --max:1200px;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,-apple-system,"Segoe UI","PingFang TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif}
-    a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+    body { font-family: "Microsoft JhengHei", sans-serif; margin: 0; padding: 0; background: #fafafa; color: #333; }
+    header { background: linear-gradient(135deg, #6bc36b, #48a848); color: #fff; padding: 60px 20px; text-align: center; }
+    header h1 { font-size: 2.5rem; margin: 0; }
+    header p { font-size: 1.2rem; margin-top: 10px; }
 
-    .container{width:min(100%, var(--max));margin-inline:auto;padding-inline:20px}
-    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.25rem;border-radius:999px;font-weight:700;border:2px solid transparent;box-shadow:var(--shadow);transition:.2s;cursor:pointer}
-    .btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{background:var(--brand-600);transform:translateY(-1px)}
-    .btn-ghost{background:#fff;border-color:var(--brand);color:var(--brand)} .btn-ghost:hover{background:var(--brand-50)}
-    .pill{display:inline-block;background:var(--brand-50);color:var(--brand-600);padding:.35rem .75rem;border-radius:999px;font-weight:700;font-size:.85rem}
+    .cta-btn { display: inline-block; margin-top: 20px; padding: 12px 28px; background: #ff7f50; color: #fff; border-radius: 30px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
+    .cta-btn:hover { background: #e96a3d; }
 
-    /* NAV */
-    .nav{position:sticky;top:0;z-index:50;background:#ffffffcc;backdrop-filter:saturate(150%) blur(6px);border-bottom:1px solid #f1f5f9}
-    .nav-wrap{display:flex;align-items:center;justify-content:space-between;padding:.75rem 20px;gap:1rem}
-    .brand{display:flex;align-items:center;gap:.75rem;font-weight:900;font-size:1.15rem}
-    .brand .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--brand),#34d399);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:var(--shadow)}
-    .nav-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+    .section { padding: 60px 20px; max-width: 1100px; margin: auto; }
+    .section h2 { text-align: center; font-size: 2rem; margin-bottom: 40px; }
 
-    /* HERO */
-    .hero{background:
-      radial-gradient(1200px 600px at 80% -10%, #d1fae5 0%, rgba(16,185,129,.05) 60%, transparent 70%),
-      linear-gradient(180deg,#fff,#f8fafc)}
-    .hero .container{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:64px}
-    .hero h1{font-size:clamp(2rem,4vw + .5rem,3rem);line-height:1.15;margin:0 0 10px;font-weight:900}
-    .hero p.lead{margin:0 0 24px;color:var(--muted);font-size:clamp(1rem, 1.3vw + .5rem,1.125rem)}
-    .heroimg{border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
-    .heroimg img{aspect-ratio:4/3;object-fit:cover}
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+    .card img { max-width: 100%; border-radius: 8px; }
+    .card h3 { margin: 15px 0 10px; }
+    .card p { font-size: 0.95rem; color: #555; }
+    .card a { margin-top: 12px; display: inline-block; padding: 8px 20px; background: #48a848; color: #fff; border-radius: 20px; text-decoration: none; }
+    .card a:hover { background: #3a8a3a; }
 
-    /* SECTIONS */
-    .section{padding-block:56px}
-    .section h2{font-size:clamp(1.35rem,2.2vw + .6rem,1.9rem);margin:0 0 18px}
-    .muted{color:var(--muted)}
+    .benefits { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; text-align: center; }
+    .benefit { flex: 1 1 200px; padding: 20px; }
+    .benefit h3 { margin-top: 10px; }
 
-    /* GRID & CARDS */
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
-    .col-4{grid-column:span 4}
-    .card{border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-    .card-img{overflow:hidden}
-    .card-img img{aspect-ratio:4/3;object-fit:cover;transition:transform .6s}
-    .card:hover .card-img img{transform:scale(1.05)}
-    .card-body{padding:18px}
-    .price{font-weight:900;color:var(--brand-600)}
-    .card-footer{display:flex;gap:.5rem;padding:16px 18px 20px}
-
-    /* BENEFITS */
-    .benefits{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
-    .b-item{grid-column:span 4;border-radius:16px;background:#f8fafc;padding:18px;display:flex;gap:.75rem;align-items:flex-start}
-    .b-item strong{display:block;margin-bottom:4px}
-
-    /* STORE */
-    .store{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;align-items:center}
-    .store .map{grid-column:span 7;border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
-    .store .info{grid-column:span 5}
-    .list{list-style:none;padding:0;margin:14px 0 0}
-    .list li{margin:8px 0;color:#334155}
-
-    /* FOOTER */
-    .footer{padding:28px 0;border-top:1px solid #e5e7eb;color:#64748b;font-size:.9rem}
-
-    /* RWD */
-    @media (max-width: 920px){
-      .hero .container{grid-template-columns:1fr;gap:26px;padding-block:44px}
-      .grid .col-4{grid-column:span 6}
-      .benefits .b-item{grid-column:span 6}
-      .store .map{grid-column:span 12}
-      .store .info{grid-column:span 12}
-    }
-    @media (max-width: 640px){
-      .grid .col-4{grid-column:span 12}
-      .benefits .b-item{grid-column:span 12}
-    }
+    footer { background: #333; color: #fff; padding: 30px; text-align: center; }
+    footer a { color: #ff7f50; text-decoration: none; }
   </style>
-
-  <script>
-    /* ===== 這裡填你的實際連結（可先不改也能用） ===== */
-    const LINE_ADD  = 'https://line.me/R/ti/p/@710gtxdl';         // 官方帳號加入連結（可換）
-    // 導到訂單頁（order.html），並帶上商品 id
-    function goOrder(pid=''){ location.href = `order.html?product=${encodeURIComponent(pid)}`; }
-    // 導到 LINE 加好友
-    function goAddLine(){ window.open(LINE_ADD, '_blank'); }
-  </script>
 </head>
 <body>
-
-  <!-- NAV -->
-  <header class="nav">
-    <div class="container nav-wrap">
-      <a class="brand" href="#"><span class="logo">J&G</span>J&G 營養俱樂部</a>
-      <div class="nav-actions">
-        <a class="btn btn-ghost" href="#menu">看看菜單</a>
-        <button class="btn btn-primary" onclick="goOrder()">線上點餐</button>
-      </div>
-    </div>
+  <!-- Hero 區塊 -->
+  <header>
+    <h1>Herbalife 健康生活館</h1>
+    <p>營養餐 · 健康瘦身 · 活力能量</p>
+    <a href="order.html" class="cta-btn">立即訂購</a>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div>
-        <span class="pill">高蛋白．低熱量．好喝無負擔</span>
-        <h1>打造活力每一天<br>客製你的營養飲品</h1>
-        <p class="lead">香草、巧克力、野莓等人氣風味，甜度/冰量自由調整。外帶即飲，運動/上班超方便！</p>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-          <button class="btn btn-primary" onclick="goOrder()">立即點餐</button>
-          <button class="btn btn-ghost" onclick="goAddLine()">加入 LINE</button>
-        </div>
+  <!-- 產品展示 -->
+  <section class="section">
+    <h2>熱銷產品</h2>
+    <div class="products">
+      <div class="card">
+        <img src="https://www.herbalife.com/etc.clientlibs/herbalife/clientlibs/clientlib-site/resources/img/herbalife-logo.png" alt="奶昔">
+        <h3>蛋白營養奶昔</h3>
+        <p>低卡高纖，取代正餐的最佳選擇。</p>
+        <a href="order.html">下單</a>
       </div>
-      <div class="heroimg">
-        <img src="https://images.unsplash.com/photo-1553531888-a99fa3c6b1d5?q=80&w=1400&auto=format&fit=crop" alt="高蛋白營養飲品">
+      <div class="card">
+        <img src="https://via.placeholder.com/300x200?text=Herbal+Tea" alt="茶飲">
+        <h3>草本能量茶</h3>
+        <p>促進代謝，提升活力與專注。</p>
+        <a href="order.html">下單</a>
       </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section class="section" id="menu">
-    <div class="container">
-      <h2>人氣飲品</h2>
-      <p class="muted">口味、甜度、冰量皆可客製。首次體驗歡迎詢問店內店員～</p>
-
-      <div class="grid" style="margin-top:18px">
-        <!-- Card 1 -->
-        <article class="card col-4">
-          <div class="card-img"><img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1200&auto=format&fit=crop" alt="香草奶昔"></div>
-          <div class="card-body">
-            <div class="pill" style="background:#fef3c7;color:#b45309">香草 Vanilla</div>
-            <h3 style="margin:10px 0 6px">蛋白飲料粉</h3>
-            <p class="muted" style="margin:0 0 8px">清爽香草風味，滑順好入口。</p>
-            <div class="price">NT$ 120</div>
-          </div>
-          <div class="card-footer">
-            <button class="btn btn-primary" onclick="goOrder('pdm-vanilla')">我要點餐</button>
-            <a class="btn btn-ghost" href="#benefits">成分與優勢</a>
-          </div>
-        </article>
-
-        <!-- Card 2 -->
-        <article class="card col-4">
-          <div class="card-img"><img src="https://images.unsplash.com/photo-1542444459-db63c9f5b3d3?q=80&w=1200&auto=format&fit=crop" alt="巧克力奶昔"></div>
-          <div class="card-body">
-            <div class="pill" style="background:#fee2e2;color:#b91c1c">巧克力 Chocolate</div>
-            <h3 style="margin:10px 0 6px">蛋白飲料粉</h3>
-            <p class="muted" style="margin:0 0 8px">濃郁可可香，運動後補給超滿足。</p>
-            <div class="price">NT$ 120</div>
-          </div>
-          <div class="card-footer">
-            <button class="btn btn-primary" onclick="goOrder('pdm-choco')">我要點餐</button>
-            <a class="btn btn-ghost" href="#benefits">成分與優勢</a>
-          </div>
-        </article>
-
-        <!-- Card 3 -->
-        <article class="card col-4">
-          <div class="card-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop" alt="野莓"></div>
-          <div class="card-body">
-            <div class="pill" style="background:#ede9fe;color:#6d28d9">野莓 Wild Berry</div>
-            <h3 style="margin:10px 0 6px">蛋白飲料粉</h3>
-            <p class="muted" style="margin:0 0 8px">微甜莓果香，清爽不膩口。</p>
-            <div class="price">NT$ 120</div>
-          </div>
-          <div class="card-footer">
-            <button class="btn btn-primary" onclick="goOrder('pdm-berry')">我要點餐</button>
-            <a class="btn btn-ghost" href="#benefits">成分與優勢</a>
-          </div>
-        </article>
+      <div class="card">
+        <img src="https://via.placeholder.com/300x200?text=Protein+Bar" alt="蛋白棒">
+        <h3>蛋白能量棒</h3>
+        <p>外出隨手一條，補充每日所需蛋白。</p>
+        <a href="order.html">下單</a>
       </div>
     </div>
   </section>
 
-  <!-- BENEFITS -->
-  <section class="section" id="benefits" style="background:#fcfffe">
-    <div class="container">
-      <h2>為什麼選擇我們？</h2>
-    <div class="benefits" style="margin-top:10px">
-      <div class="b-item">
-        <div class="pill" style="background:var(--brand-50);color:var(--brand-600)">01</div>
-        <div>
-          <strong>優質蛋白，補足關鍵營養</strong>
-          <span class="muted">每杯提供高品質蛋白質，搭配均衡飲食與運動，幫你更有效率地管理體態。</span>
-        </div>
+  <!-- 優勢特色 -->
+  <section class="section">
+    <h2>為什麼選擇我們？</h2>
+    <div class="benefits">
+      <div class="benefit">
+        <h3>專業營養指導</h3>
+        <p>提供專屬客製化健康方案。</p>
       </div>
-      <div class="b-item">
-        <div class="pill" style="background:var(--brand-50);color:var(--brand-600)">02</div>
-        <div>
-          <strong>低熱量、客製甜度與冰量</strong>
-          <span class="muted">依照你的喜好調整風味與口感，讓健康飲食更容易持之以恆。</span>
-        </div>
+      <div class="benefit">
+        <h3>國際品質保證</h3>
+        <p>全球信賴的營養品牌。</p>
       </div>
-      <div class="b-item">
-        <div class="pill" style="background:var(--brand-50);color:var(--brand-600)">03</div>
-        <div>
-          <strong>外帶即飲，日常補給超方便</strong>
-          <span class="muted">快速出杯、保存便利，訓練前後或忙碌上班族的最佳夥伴。</span>
-        </div>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  <!-- STORE -->
-  <section class="section" id="store">
-    <div class="container store">
-      <div class="map">
-        <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=1400&auto=format&fit=crop" alt="店內環境">
-      </div>
-      <div class="info">
-        <span class="pill">門市資訊</span>
-        <h2 style="margin-top:8px">J&G 營養俱樂部（平鎮）</h2>
-        <ul class="list">
-          <li>地址：桃園市平鎮區復旦路二段241巷1弄22衖1號1樓</li>
-          <li>營業時間：週一～週六 10:00–20:00；週日公休</li>
-          <li>電話：<a href="tel:0907-207-088" style="color:var(--brand-600);font-weight:700">0907-207-088</a></li>
-        </ul>
-        <div style="margin-top:14px;display:flex;gap:.6rem;flex-wrap:wrap">
-          <a class="btn btn-ghost" href="https://maps.google.com/?q=桃園市平鎮區復旦路二段241巷1弄22衖1號1樓" target="_blank" rel="noopener">在 Google 地圖開啟</a>
-          <button class="btn btn-primary" onclick="goOrder()">我要點餐</button>
-        </div>
+      <div class="benefit">
+        <h3>多樣化選擇</h3>
+        <p>產品線涵蓋代餐、茶飲、營養補充。</p>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
-      <div>© <span id="y"></span> J&G 營養俱樂部</div>
-      <div class="muted">高蛋白・低熱量・客製風味 | 你的每日營養補給站</div>
+  <!-- 門市資訊 -->
+  <section class="section">
+    <h2>門市資訊</h2>
+    <p style="text-align:center;">桃園市中壢區復旦路 123 號 | 營業時間：10:00 - 20:00</p>
+    <div style="text-align:center;">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.242...你的地圖ID..."
+        width="90%" height="300" style="border:0;" allowfullscreen loading="lazy"></iframe>
     </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Herbalife 健康生活館 | <a href="order.html">立即訂購</a></p>
   </footer>
-
-  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>
 </html>
